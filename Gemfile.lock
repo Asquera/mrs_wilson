@@ -1,0 +1,23 @@
+GEM
+  remote: http://rubygems.org/
+  specs:
+    activesupport (3.0.9)
+    blather (0.5.3)
+      activesupport (>= 3.0.7)
+      eventmachine (~> 0.12.6)
+      minitest (>= 1.7.1)
+      niceogiri (>= 0.0.4)
+      nokogiri (>= 1.4.0)
+    eventmachine (0.12.10)
+    minitest (2.3.1)
+    niceogiri (0.0.4)
+      nokogiri (>= 1.4.0)
+    nokogiri (1.5.0)
+    state_machine (1.0.1)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  blather
+  state_machine
