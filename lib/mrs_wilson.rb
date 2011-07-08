@@ -91,6 +91,11 @@ module MrsWilson
     harvest.start_choosing
     say_to_master 'Choosing...'
   end
+
+  message :chat?, :body => /#e.*/ do
+    text = /#t(.*)/.match(m.body)[1]
+    say m.from, "You said: #{text}"
+  end
   
   message :chat?, :body => /#t (.*)/ do |m|
     text = /#t(.*)/.match(m.body)[1]
@@ -108,12 +113,6 @@ module MrsWilson
   
   disconnected { client.connect }
 end
-
-#h = Harvest.new(nil)
-#puts h.state
-#puts h.start
-#puts h.start_choosing
-#puts h.state_paths.inspect
 
 EM.run {   
   MrsWilson.run 
