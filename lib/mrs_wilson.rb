@@ -92,8 +92,8 @@ module MrsWilson
     say_to_master 'Choosing...'
   end
 
-  message :chat?, :body => /#e.*/ do
-    text = /#t(.*)/.match(m.body)[1]
+  message :chat?, :body => /#e.*/ do |m|
+    text = /#e(.*)/.match(m.body)[1]
     say m.from, "You said: #{text}"
   end
   
