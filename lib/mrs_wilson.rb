@@ -57,8 +57,11 @@ module MrsWilson
     say master, stanza
   end
   
-  setup 'bot@florian-gilchers-macbook-pro.local', 'gandalf'
-  master 'test@florian-gilchers-macbook-pro.local'
+  #setup 'bot@florian-gilchers-macbook-pro.local', 'gandalf'
+  #master 'test@florian-gilchers-macbook-pro.local'
+  
+  setup 'mrs.wilson@jabber.ccc.de', 'gandalf'
+  master 'skade@jabber.ccc.de'
   
   when_ready { 
     puts "Connected ! send messages to #{jid.stripped}."
