@@ -8,7 +8,7 @@ module MrsWilson
   
   def self.harvest
     #@harvest ||= Harvest.new(self)
-    @harvest ||= Harvest.hardy_client('asquera', 'florian.gilcher@asquera.de', 'Yooqu4ve')
+    @harvest ||= Harvest.hardy_client(ENV['HARVEST.SUBDOMAIN'], ENV['HARVEST.EMAIL'], ENV['HARVEST.PASSWORD'])
   end
   
   def self.master(master = nil)
@@ -26,8 +26,8 @@ module MrsWilson
   #setup 'bot@florian-gilchers-macbook-pro.local', 'gandalf'
   #master 'test@florian-gilchers-macbook-pro.local'
   
-  setup 'mrs.wilson@jabber.ccc.de', 'gandalf'
-  master 'skade@jabber.ccc.de'
+  setup ENV['WILSON.BOT.ACCOUNT'], ENV['WILSON.BOT.PASSWORD']
+  master ENV['WILSON.MASTER.ACCOUNT']
   
   when_ready { 
     puts "Connected ! send messages to #{jid.stripped}."
