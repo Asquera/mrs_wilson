@@ -1,3 +1,12 @@
+GIT
+  remote: https://github.com/Asquera/harvested.git
+  revision: ffa32d1699e98774832c762473962356e9aefea5
+  specs:
+    harvested (0.3.3)
+      builder
+      happymapper
+      httparty
+
 GEM
   remote: http://rubygems.org/
   specs:
@@ -8,11 +17,22 @@ GEM
       minitest (>= 1.7.1)
       niceogiri (>= 0.0.4)
       nokogiri (>= 1.4.0)
+    builder (3.0.0)
+    crack (0.1.8)
     eventmachine (0.12.10)
+    happymapper (0.3.2)
+      libxml-ruby (~> 1.1.3)
+    hashie (1.0.0)
+    httparty (0.7.8)
+      crack (= 0.1.8)
+    libxml-ruby (1.1.4)
     minitest (2.3.1)
     niceogiri (0.0.4)
       nokogiri (>= 1.4.0)
     nokogiri (1.5.0)
+    riot (0.12.4)
+      rr
+    rr (1.0.2)
     state_machine (1.0.1)
 
 PLATFORMS
@@ -20,4 +40,7 @@ PLATFORMS
 
 DEPENDENCIES
   blather
+  harvested!
+  hashie
+  riot
   state_machine
