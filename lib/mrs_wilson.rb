@@ -23,9 +23,6 @@ module MrsWilson
     say master, stanza
   end
   
-  #setup 'bot@florian-gilchers-macbook-pro.local', 'gandalf'
-  #master 'test@florian-gilchers-macbook-pro.local'
-  
   setup ENV['WILSON.BOT.ACCOUNT'], ENV['WILSON.BOT.PASSWORD']
   master ENV['WILSON.MASTER.ACCOUNT']
   
@@ -66,6 +63,14 @@ module MrsWilson
     timer = stop_timer
     
     say m.from, "Stopped timer #{timer.notes}"
+  end
+  
+  message :chat?, :body => /#l/ do |m|
+    lines = harvest.time.all.each_with_index do |l, i|
+      "#{i+1} #{l.started_at}-#{l.ended_at} #{l.project} #{l.task} #{l.name} #{l.notes}"
+    end
+    
+    say m.form, lines.join("\n")
   end
   
   message :chat?, :body => /#t (.*)/ do |m|
