@@ -66,7 +66,7 @@ module MrsWilson
   end
   
   message :chat?, :body => /#l/ do |m|
-    lines = harvest.time.all.each_with_index do |l, i|
+    lines = harvest.time.all.each_with_index.map do |l, i|
       "#{i+1} #{l.started_at}-#{l.ended_at} #{l.project} #{l.task} #{l.notes}"
     end
     
