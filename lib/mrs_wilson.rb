@@ -87,7 +87,7 @@ module MrsWilson
   
   def self.stop_timer
     harvest.time.all.last.tap do |t|
-      harvest.time.toggle(t) if timer.timer_started_at
+      harvest.time.toggle(t) if t.timer_started_at
     end
   end
   
