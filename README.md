@@ -8,7 +8,7 @@ I use jabber.ccc.de.
 
     $ heroku create my-cool-app --stack cedar
 
-Configure the following variables:
+Configure the following variables, proper config files will follow:
    
     $ heroku config:add WILSON.BOT.ACCOUNT="my_bot@account.de"
     $ heroku config:add WILSON.BOT.PASSWORD="my_bots_password"
