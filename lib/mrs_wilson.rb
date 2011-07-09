@@ -70,7 +70,7 @@ module MrsWilson
       "#{i+1} #{l.started_at}-#{l.ended_at} #{l.project} #{l.task} #{l.notes}"
     end
     
-    say m.form, lines.join("\n")
+    say m.from, lines.join("\n")
   end
   
   message :chat?, :body => /#t (.*)/ do |m|
