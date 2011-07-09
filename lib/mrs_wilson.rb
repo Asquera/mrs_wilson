@@ -45,10 +45,6 @@ module MrsWilson
     shutdown
   end
   
-  #message :chat?, :body => "Who are you?" do |m|
-  #  say m.from, "What gift do you think a good servant has that separates them from the others? Its the gift of anticipation. And I'm a good servant; I'm better than good, I'm the best; I'm the perfect servant. I know when they'll be hungry, and the food is ready. I know when they'll be tired, and the bed is turned down. I know it before they know it themselves."
-  #end
-  
   message :chat?, :body => /#c/ do |m|
     harvest.start_choosing
     say_to_master 'Choosing...'
@@ -90,8 +86,9 @@ module MrsWilson
   end
   
   def self.stop_timer
-    timer = harvest.time.all.last
-    harvest.time.toggle(timer)
+    harvest.time.all.last.tap do |t|
+      harvest.time.toggle(t) if timer.timer_started_at
+    end
   end
   
   disconnected { client.connect }
