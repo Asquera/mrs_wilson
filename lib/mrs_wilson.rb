@@ -67,7 +67,7 @@ module MrsWilson
   
   message :chat?, :body => /#l/ do |m|
     lines = harvest.time.all.each_with_index do |l, i|
-      "#{i+1} #{l.started_at}-#{l.ended_at} #{l.project} #{l.task} #{l.name} #{l.notes}"
+      "#{i+1} #{l.started_at}-#{l.ended_at} #{l.project} #{l.task} #{l.notes}"
     end
     
     say m.form, lines.join("\n")
