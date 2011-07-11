@@ -30,7 +30,7 @@ module MrsWilson
   
   def self.harvest
     cfg = config.harvest
-    @harvest ||= Harvest.hardy_client(cfg.harvest.subdomain, cfg.harvest.email, cfg.harvest.password)
+    @harvest ||= Harvest.hardy_client(cfg.subdomain, cfg.email, cfg.password)
   end
   
   def self.master(master = nil)
@@ -91,6 +91,30 @@ module MrsWilson
     say m.from, lines.join("\n")
   end
   
+  message :chat?, :body => /#p\s*(?<name>.+)?/ do |m|
+    match = /#p\s*(?<name>.+)?/.match(m.body)
+    name = match[:name]
+    if name
+      p = harvest.projects.all.find { |p| p.name.downcase == name.downcase }
+      @project = p.id
+      say m.from, "Switched to project #{p.id}, #{p.name}"
+    else
+      say m.from, harvest.projects.all.map(&:name).join("\n")
+    end
+  end
+  
+  message :chat?, :body => /#task\s*(?<name>.+)?/ do |m|
+    match = /#task\s*(?<name>.+)?/.match(m.body)
+    name = match[:name]
+    if name
+      t = harvest.tasks.all.find { |t| t.name.downcase == name.downcase }
+      @task = t.id
+      say m.from, "Switched to task #{t.id}, #{t.name}"
+    else
+      say m.from, harvest.tasks.all.map(&:name).join("\n")
+    end
+  end
+  
   message :chat?, :body => /#t (.*)/ do |m|
     text = /#t(.*)/.match(m.body)[1]
     timer = track(text)
@@ -104,7 +128,7 @@ module MrsWilson
   end
   
   def self.track(text)
-    harvest.time.create(notes: text, project_id: 748602, task_id: 461119)
+    harvest.time.create(notes: text, project_id: @project, task_id: @task)
   end
   
   def self.stop_timer
