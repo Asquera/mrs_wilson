@@ -2,13 +2,35 @@ require 'rubygems'
 require 'blather/client/dsl'
 require 'state_machine'
 require 'harvested'
+require 'yaml'
 
 module MrsWilson
   extend Blather::DSL
   
+  def self.default_config
+    m = Hashie::Mash.new
+    m.harvest!.subdomain    = ENV['HARVEST.SUBDOMAIN']
+    m.harvest!.email        = ENV['HARVEST.EMAIL']
+    m.harvest!.password     = ENV['HARVEST.PASSWORD']
+    m.wilson!.bot!.account  = ENV['WILSON.BOT.ACCOUNT']
+    m.wilson!.bot!.password = ENV['WILSON.BOT.PASSWORD']
+    m.wilson!.bot!.master   = ENV['WILSON.MASTER.ACCOUNT']
+    m
+  end
+  
+  def self.config
+    @config ||= load_config
+  end
+  
+  def self.load_config
+    m = Hashie::Mash.new
+    m = m.deep_update(default_config)
+    m.deep_update(YAML.load(File.read('config.yml')))
+  end
+  
   def self.harvest
-    #@harvest ||= Harvest.new(self)
-    @harvest ||= Harvest.hardy_client(ENV['HARVEST.SUBDOMAIN'], ENV['HARVEST.EMAIL'], ENV['HARVEST.PASSWORD'])
+    cfg = config.harvest
+    @harvest ||= Harvest.hardy_client(cfg.harvest.subdomain, cfg.harvest.email, cfg.harvest.password)
   end
   
   def self.master(master = nil)
@@ -23,8 +45,8 @@ module MrsWilson
     say master, stanza
   end
   
-  setup ENV['WILSON.BOT.ACCOUNT'], ENV['WILSON.BOT.PASSWORD']
-  master ENV['WILSON.MASTER.ACCOUNT']
+  setup config.wilson.bot.account, config.wilson.bot.password 
+  master config.wilson.bot.master
   
   when_ready { 
     puts "Connected ! send messages to #{jid.stripped}."
