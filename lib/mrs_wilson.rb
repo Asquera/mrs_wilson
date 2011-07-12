@@ -25,7 +25,8 @@ module MrsWilson
   def self.load_config
     m = Hashie::Mash.new
     m = m.deep_update(default_config)
-    m.deep_update(YAML.load(File.read('config.yml')))
+    m.deep_update(YAML.load(File.read('config.yml'))) if File.exists?('config.yml')
+    m
   end
   
   def self.harvest
